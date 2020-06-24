@@ -12,6 +12,8 @@ namespace IsA
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,6 +24,16 @@ namespace IsA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:11477/banka",
+                                          "http://localhost:3000");
+                                  });
+            });
+
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
@@ -48,6 +60,7 @@ namespace IsA
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseEndpoints(endpoints =>
             {

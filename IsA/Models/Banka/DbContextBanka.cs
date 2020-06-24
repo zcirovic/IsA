@@ -56,7 +56,7 @@ namespace IsA.Models.Banka
         {
             DataSet ds = new DataSet();
             
-            string constring = Podesavanja.connectionString_VETS;
+            string constring = Podesavanja.connectionString_VETS_test;
             SqlDataAdapter da = new SqlDataAdapter("Select*from Banka", constring);
             da.Fill(ds);
             List<Banka> lstBanke = new List<Banka>();
